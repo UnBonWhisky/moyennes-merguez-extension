@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Token Redirect</title>
+</head>
+<body>
+    <h1>Token Redirect</h1>
+    <script>
+        const hashParams = new URLSearchParams(window.location.hash.slice(1));
+        const accessToken = hashParams.get('access_token');
+        const tokenType = hashParams.get('token_type');
+        const expiresIn = hashParams.get('expires_in');
+
+        console.log("Access Token:", accessToken);
+        console.log("Token Type:", tokenType);
+        console.log("Expires In:", expiresIn);
+    </script>
+</body>
+</html>

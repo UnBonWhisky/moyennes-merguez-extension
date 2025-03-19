@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<meta charset="UTF-8">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+	<link rel="stylesheet" type="text/css" href="/css/input.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/button.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/checkbox.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/loader.min.css">
+
+	<script type="text/javascript" src="/libs/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/libs/checkbox.min.js"></script>
+	<script type="text/javascript" src="/js/shared.js"></script>
+	<script type="text/javascript" src="/js/storage.js"></script>
+	<script type="text/javascript" src="/js/popup.js"></script>
+</head>
+
+<style type="text/css">
+	body {
+		width: 320px;
+		overflow: hidden;
+		font-size: 12px;
+		background-color: #242424;
+		color: #F5F5F5;
+	}
+	#background {
+		height: 230px;
+	}
+
+	.display-none {
+		display: none;
+	}
+	.centered {
+		text-align: center;
+	}
+
+	html * {
+		font-family: 'Lato', sans-serif;
+	}
+	#title {
+		display: inline;
+		font-size: 2em;
+	}
+	#title-version {
+		float: right;
+		position: relative;
+		top: -6px;
+		display: inline;
+		font-size: 1em;
+	}
+	#title-separator {
+		position: relative;
+		top: -10px;
+	}
+
+	.button.blue {
+		background-color: #1E7BB3;
+	}
+	.button.blue:active,
+	.button.blue:focus {
+		background-color: #186591;
+	}
+
+	.toggle.checkbox > label:before,
+	.toggle.checkbox > label:after {
+		top: 8px !important;
+	}
+
+	#main,
+	#myges-login {
+		position: absolute;
+		left: 0px;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+	#myges-login {
+		display: none;
+		text-align: center;
+	}
+	#myges-login > .title {
+		font-size: 1.17em;
+		margin-top: 0px;
+	}
+	#main .results {
+		margin-top: 4px;
+	}
+	#main .results img,
+	#main .results .msg {
+		vertical-align: middle;
+	}
+
+	#loader {
+		display: none;
+	}
+	#loader .ui.dimmer .ui.loader:after {
+		border-color: #1E7BB3 transparent transparent;
+	}
+	#loader-overlay {
+		display: none;
+		background-color: rgba(0, 0, 0, 0.8);
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.success {
+		color: #4CAF50;
+	}
+	.error {
+		color: #F44336;
+	}
+
+	.ui.toggle.checkbox input:checked~.box, .ui.toggle.checkbox input:checked~label,
+	.ui.toggle.checkbox label,
+	.ui.toggle.checkbox input:focus:checked~label {
+		color: #F5F5F5 !important;
+	}
+
+	a {
+		color: #2185d0;
+	}
+
+	.ui.toggle.checkbox label:before,
+	.ui.toggle.checkbox input:focus~label:before {
+		background-color: rgb(66, 66, 66);
+	}
+	.ui.toggle.checkbox label:hover::before {
+		background-color: rgb(72, 72, 72);
+	}
+</style>
+
+<body>
+	<h1 id="title">Moyennes myGES</h1>
+	<h4 id="title-version"></h4><br><br>
+	<hr id="title-separator">
+
+	<div id="main">
+		<div class="centered">
+			<a id="btn-show-grades" class="large ui button blue" href="https://myges.fr/student/marks" target="blank">Consulter mes notes</a>
+		</div>
+		<br>
+
+		<div class="ui toggle checkbox">
+			<input id="cb-receive-notification-grades" type="checkbox" class="hidden">
+			<label>Recevoir une notification quand une nouvelle note est mise en ligne</label>
+		</div>
+		<div class="results">
+			<span class="success display-none"></span>
+			<span class="error display-none"></span>
+		</div>
+
+		<div class="ui toggle checkbox">
+			<input id="cb-receive-notification-absences" type="checkbox" class="hidden">
+			<label>Recevoir une notification quand une absence est ajoutée</label>
+		</div>
+		<div class="results">
+			<span class="success display-none"></span>
+			<span class="error display-none"></span>
+		</div>
+
+		<div class="ui toggle checkbox">
+			<input id="cb-replace-logo-myges" type="checkbox" class="hidden">
+			<label>Remplacer le logo MyGES par un autre logo plus humoristique</label>
+		</div>
+
+		<div class="ui toggle checkbox">
+			<input id="cb-take-no-coeff-subjects" type="checkbox" class="hidden">
+			<label>Considérer les matières coefficient N.C comme étant coefficient 1</label>
+		</div>
+	</div>
+
+	<form id="myges-login">
+		<h3 class="title">Connectez vous à myGES pour recevoir les notifications :</h3>
+
+		<label for="myges-account-name">Nom de compte :</label><br>
+		<div class="ui input">
+			<input type="text" id="myges-account-name" autocomplete="off" required="required">
+		</div>
+		<br><br>
+		<label for="myges-password">Mot de passe :</label><br>
+		<div class="ui input">
+			<input type="password" id="myges-password" autocomplete="off" required="required">
+		</div>
+		<br><br>
+
+		<button type="submit" class="ui button blue">Connexion</button>
+		<button id="myges-login-back" type="button" class="ui button">Annuler</button>
+	</form>
+
+	<div id="background"></div>
+
+	<div id="loader-overlay"></div>
+	<div id="loader" class="ui segment">
+		<div class="ui active dimmer">
+			<div class="ui big loader"></div>
+		</div>
+	</div>
+
+	<hr>
+	<div class="centered">
+		Contact : <a href="mailto:ax.cocat@gmail.com" target="blank">ax.cocat@gmail.com</a> & <a href="mailto:flavien.fouqueray@icloud.com" target="blank">flavien.fouqueray@icloud.com</a>
+	</div>
+</body>
+</html>

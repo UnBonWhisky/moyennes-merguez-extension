@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/ma_page.html"
+      }
+    },
+    "condition": {
+      "urlFilter": "comreseaugesmyges:/oauth2redirect*",
+      "resourceTypes": ["main_frame", "sub_frame"]
+    }
+  }
+]

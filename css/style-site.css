@@ -1,0 +1,32 @@
+.moyennes-myges-green {
+	color: #4CAF50;
+}
+
+.moyennes-myges-red {
+	color: #F44336;
+}
+
+.moyennes-myges-blue {
+	color: #217BB1;
+}
+
+.fake-coefficient {
+	font-size: smaller;
+}
+
+.moyennes-myges-subject-avg {
+	opacity: 0.8;
+}
+
+#moyennes-myges-btn-sim,
+#moyennes-myges-btn-add-cc {
+	float: right;
+}
+
+.ui-datatable tbody td.moyennes-myges-td-editable {
+	padding: 0px;
+}
+.moyennes-myges-td-editable input {
+	width: 90%;
+	height: 22px;
+}

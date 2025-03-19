@@ -1,0 +1,49 @@
+{
+   "background": {
+      "service_worker": "pages/background.js"
+   },
+   "action": {
+      "default_icon": "img/32.png",
+      "default_popup": "pages/popup.html"
+   },
+   "content_scripts": [ {
+      "js": [ "libs/jquery-3.4.1.min.js", "js/shared.js", "js/storage.js", "js/script_replace_image.js" ],
+      "matches": [ "https://myges.fr/*" ],
+      "run_at": "document_start"
+   },
+   {
+      "css": [ "css/style-site.css", "css/balloon.css" ],
+      "js": [ "js/storage.js", "js/script.js" ],
+      "matches": [ "https://myges.fr/student/marks", "https://myges.fr/alumni/marks" ]
+   } ],
+   "description": "Calcul automatique des moyennes sur myGES.",
+   "icons": {
+      "128": "img/128.png",
+      "256": "img/256.png",
+      "32": "img/32.png",
+      "48": "img/48.png",
+      "64": "img/64.png"
+   },
+   "manifest_version": 3,
+   "name": "Moyennes myGES",
+   "permissions": [ "storage", "notifications", "declarativeNetRequest" ],
+   "host_permissions": [ "https://myges.fr/*", "https://authentication.kordis.fr/*", "https://ges-calendar.unbonwhisky.fr/api/token/get" ],
+   "declarative_net_request": {
+      "rule_resources": [ {
+         "id": "ruleset_1",
+         "enabled": true,
+         "path": "rules.json"
+      } ]
+  },
+   "version": "1.2.0",
+   "web_accessible_resources": [
+      {
+         "resources": [ "libs/jquery-3.4.1.min.js", "js/script.js", "css/style-site.css", "js/script_replace_image.js", "img/logo_merguez_126x40.png" ],
+         "matches": [ "https://myges.fr/*" ]
+      },
+      {
+         "resources": [ "pages/receive_page.html" ],
+         "matches": [ "<all_urls>" ]
+      }
+   ]
+}
